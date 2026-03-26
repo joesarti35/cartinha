@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Para você ❤️</title>
+
+  <!-- Música -->
+  <audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 2;
+      animation: aparecer 1s ease;
+    }
+
+    @keyframes aparecer {
+      from {opacity: 0; transform: scale(0.8);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    h2 {
+      color: #ff4d6d;
+    }
+
+    #mensagem {
+      min-height: 100px;
+      white-space: pre-line;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #ff1e4d;
+      box-shadow: 0 0 15px rgba(255,77,109,0.6);
+    }
+
+    /* Corações */
+    .heart {
+      position: absolute;
+      color: red;
+      animation: subir 5s linear infinite;
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>💌 Uma mensagem pra você</h2>
+  <div id="mensagem"></div>
+  <button onclick="start()">Abrir mensagem</button>
+</div>
+
+<script>
+  const texto = `Desde aquele momento, desde aquela patrulha… eu soube que tinha algo diferente.
+
+E agora que te tenho por perto de novo, eu não pretendo desperdiçar isso.
+
+Porque, sendo bem sincero… eu quero você. E não é pouco. ❤️😍
+
+I love you baby.`;
+
+  let i = 0;
+
+  function start() {
+    // tocar música
+    const musica = document.getElementById("musica");
+    musica.currentTime = 0;
+    musica.volume = 0.3; // volume inicial baixo
+    musica.play();
+
+    // efeito digitando
+    const el = document.getElementById("mensagem");
+    el.innerHTML = "";
+    i = 0;
+
+    function escrever() {
+      if (i < texto.length) {
+        el.innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(escrever, 40);
+      }
+    }
+
+    escrever();
+
+    // corações
+    criarCoracoes();
+
+    // esconder botão
+    document.querySelector("button").style.display = "none";
+  }
+
+  function criarCoracoes() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
